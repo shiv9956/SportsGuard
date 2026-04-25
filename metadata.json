@@ -1,0 +1,6 @@
+{
+  "name": "SportsGuard",
+  "description": "Digital Asset Protection for Sports Media - A tactical command center for registering, tracking, and protecting sports digital assets.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["AI-powered threat analysis", "Perceptual hashing", "DMCA automation"]
+}

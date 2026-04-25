@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-blaze: #FF3B30;
+  --color-brand-blaze-hover: #FF453A;
+  --color-volt-blue: #0A84FF;
+  --color-neon-green: #32D74B;
+  --color-amber-alert: #FF9F0A;
+  --color-tactical-border: #27272A;
+  --color-bg-void: #050505;
+  --color-surface-matte: #0A0A0A;
+  --color-panel-card: #111111;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #A1A1AA;
+  --color-text-muted: #71717A;
+  --font-bebas: "Bebas Neue", cursive;
+  --font-manrope: "Manrope", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-display: "Arial Narrow", sans-serif-condensed, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-void text-text-secondary font-manrope selection:bg-brand-blaze selection:text-black;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bebas tracking-tight uppercase text-white;
+  }
+
+  * {
+    @apply rounded-none;
+  }
+}
+
+@layer components {
+  .tactical-grid {
+    background-image: linear-gradient(#111111 1px, transparent 1px), 
+                      linear-gradient(90deg, #111111 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .scan-line {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scan-line::after {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(255, 59, 48, 0.15), transparent);
+    animation: scan 4s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes scan {
+    0% { top: -100%; }
+    100% { top: 100%; }
+  }
+
+  .status-dot {
+    @apply w-2 h-2 rounded-full;
+  }
+
+  .status-dot-pulse {
+    animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .4; }
+  }
+
+  .terminal-text {
+    @apply font-mono text-[#39FF14] bg-black p-4 border border-tactical-border leading-relaxed;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-bg-void;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-tactical-border hover:bg-zinc-700 transition-colors;
+  }
+}
