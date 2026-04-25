@@ -216,8 +216,18 @@ const Detections = () => {
                                 <div className="text-xl font-mono text-white font-bold uppercase tracking-widest underline decoration-brand-blaze underline-offset-8 decoration-2">{selected.status}</div>
                              </div>
                              <div className="flex gap-2 mt-4">
-                                <button className="flex-1 py-2 border border-tactical-border text-text-muted hover:text-white transition-colors font-mono text-[9px] uppercase tracking-widest">FALSE_ALARM</button>
-                                <button className="flex-1 py-2 bg-brand-blaze/10 border border-brand-blaze/30 text-brand-blaze font-mono text-[9px] uppercase tracking-widest font-bold">FLAG_URGENT</button>
+                                <button 
+                                  onClick={() => handleAction(selected.id, 'FALSE_ALARM')}
+                                  className="flex-1 py-2 border border-tactical-border text-text-muted hover:text-white transition-colors font-mono text-[9px] uppercase tracking-widest"
+                                >
+                                  FALSE_ALARM
+                                </button>
+                                <button 
+                                  onClick={() => handleAction(selected.id, 'URGENT')}
+                                  className="flex-1 py-2 bg-brand-blaze/10 border border-brand-blaze/30 text-brand-blaze font-mono text-[9px] uppercase tracking-widest font-bold"
+                                >
+                                  FLAG_URGENT
+                                </button>
                              </div>
                           </div>
                        </div>
@@ -225,7 +235,14 @@ const Detections = () => {
 
                     {/* Action Bar */}
                     <div className="p-8 border-t border-tactical-border bg-panel-card flex justify-end gap-6 items-center">
-                       <button className="font-mono text-xs px-10 py-5 border border-tactical-border text-text-muted uppercase tracking-[0.3em] hover:bg-white/5 hover:text-white transition-all">
+                       <button 
+                         onClick={() => {
+                           setDetections(prev => prev.filter(d => d.id !== selected.id));
+                           setSelected(null);
+                           toast.success('THREAT_ARCHIVED: MOVED_TO_COLD_STORAGE');
+                         }}
+                         className="font-mono text-xs px-10 py-5 border border-tactical-border text-text-muted uppercase tracking-[0.3em] hover:bg-white/5 hover:text-white transition-all"
+                       >
                           ARCHIVE_THREAT
                        </button>
                        <button 

@@ -12,6 +12,7 @@ const Assets = React.lazy(() => import('./pages/Assets'));
 const Scan = React.lazy(() => import('./pages/Scan'));
 const Detections = React.lazy(() => import('./pages/Detections'));
 const Insights = React.lazy(() => import('./pages/Insights'));
+const Docs = React.lazy(() => import('./pages/Docs'));
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Login isRegister />} />
+            <Route path="/docs" element={<Docs />} />
             
             <Route path="/dashboard" element={<DashLayout />}>
               <Route index element={<Dashboard />} />

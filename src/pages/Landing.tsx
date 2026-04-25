@@ -55,9 +55,11 @@ const Landing = () => {
               INITIALIZE_PROTECTION
             </button>
           </Link>
-          <button className="border border-tactical-border text-white font-mono text-xs px-12 py-5 tracking-[0.3em] uppercase hover:bg-white/5 transition-all">
-            DOCUMENTATION_v4.5
-          </button>
+          <Link to="/docs">
+            <button className="border border-tactical-border text-white font-mono text-xs px-12 py-5 tracking-[0.3em] uppercase hover:bg-white/5 transition-all w-full sm:w-auto">
+              DOCUMENTATION_v4.5
+            </button>
+          </Link>
         </motion.div>
 
         {/* Feature Tickers */}

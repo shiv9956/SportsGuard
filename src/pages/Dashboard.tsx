@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Navigate, Link } from 'react-router-dom';
 import api from '../lib/api';
 import { 
   ShieldAlert, 
@@ -172,9 +173,11 @@ const Dashboard = () => {
                     <div className="font-mono text-[11px] text-text-muted truncate flex-1 uppercase">Src: {d.sourceUrl}</div>
                   </div>
                   <div className="flex justify-end pt-2">
-                    <button className="font-mono text-[10px] text-brand-blaze uppercase tracking-widest border border-brand-blaze px-4 py-1.5 hover:bg-brand-blaze hover:text-white transition-all">
-                      REVIEW
-                    </button>
+                    <Link to="/dashboard/threats">
+                      <button className="font-mono text-[10px] text-brand-blaze uppercase tracking-widest border border-brand-blaze px-4 py-1.5 hover:bg-brand-blaze hover:text-white transition-all">
+                        REVIEW
+                      </button>
+                    </Link>
                   </div>
                 </div>
               ))}
