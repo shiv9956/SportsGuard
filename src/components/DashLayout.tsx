@@ -125,12 +125,12 @@ const DashLayout: React.FC = () => {
           <div className="flex items-center gap-4 lg:gap-8">
             <div className="hidden sm:flex items-center gap-3">
               <div className="hidden lg:block text-right">
-                <div className="font-mono text-[10px] uppercase text-white font-bold leading-none">{user.full_name}</div>
-                <div className="font-mono text-[8px] uppercase text-text-muted mt-1">{user.organization}</div>
+                <div className="font-mono text-[10px] uppercase text-white font-bold leading-none">{user?.full_name || 'GUEST_OPERATOR'}</div>
+                <div className="font-mono text-[8px] uppercase text-text-muted mt-1">{user?.organization || 'SECURE_NODE'}</div>
               </div>
               <div className="w-8 h-8 border border-tactical-border bg-panel-card flex items-center justify-center text-brand-blaze overflow-hidden">
                 <img 
-                  src={`https://api.dicebear.com/7.x/pixel-art/svg?seed=${user.id}`} 
+                  src={`https://api.dicebear.com/7.x/pixel-art/svg?seed=${user?.id || 'default'}`} 
                   alt="avatar" 
                   className="w-full h-full object-cover grayscale opacity-80"
                 />

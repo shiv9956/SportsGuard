@@ -82,7 +82,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard 
           label="Assets Protected" 
-          value={stats.assets_protected.toLocaleString()} 
+          value={stats?.assets_protected?.toLocaleString() || '0'} 
           subValue="+4.2% THIS CYCLE" 
           trend={true}
           icon={Archive}
@@ -90,7 +90,7 @@ const Dashboard = () => {
         />
         <StatCard 
           label="Live Threats" 
-          value={stats.infringements_detected} 
+          value={stats?.infringements_detected || '0'} 
           subValue="REQUIRES_ATTENTION" 
           trend={false}
           icon={ShieldAlert}
@@ -106,7 +106,7 @@ const Dashboard = () => {
         />
         <StatCard 
           label="Integrity Score" 
-          value={stats.integrity_score + '%'} 
+          value={(stats?.integrity_score || 0) + '%'} 
           subValue="PROTOCOL_NOMINAL" 
           trend={true}
           icon={CheckCircle2}
@@ -126,7 +126,7 @@ const Dashboard = () => {
               Platform_Distribution_Analysis
             </h3>
             <div className="space-y-8">
-              {stats.platform_breakdown.map((item: any, i: number) => (
+              {stats?.platform_breakdown?.map((item: any, i: number) => (
                 <div key={i} className="space-y-3">
                   <div className="flex justify-between font-mono text-[10px] uppercase tracking-widest text-[#A1A1AA]">
                     <span className="text-white">{item.label}</span>

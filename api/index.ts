@@ -136,36 +136,29 @@ app.get("/api/stats/dashboard", authenticate, (req: any, res) => {
 const isProd = process.env.NODE_ENV === "production" || process.env.VERCEL === "1";
 
 if (!isProd) {
-  // We'll handle this in a separate server for local dev to avoid Vite in serverless
-} else {
-  const distPath = path.join(process.cwd(), "dist");
-  app.use(express.static(distPath));
-  app.get("*", (req, res) => {
-    // Only serve index.html if it exists and it's not an API route
-    if (!req.path.startsWith('/api')) {
-       res.sendFile(path.join(distPath, "index.html"), (err) => {
-         if (err) res.status(404).send("Not Found");
-       });
-    } else {
-       res.status(404).json({ error: "API Route Not Found" });
-    }
-  });
-}
-
-// Local dev listener logic
-if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
   const startDev = async () => {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-    });
-    app.use(vite.middlewares);
-    const PORT = 3000;
-    app.listen(PORT, "0.0.0.0", () => {
-      console.log(`[DEV] Server running at http://localhost:${PORT}`);
-    });
+    try {
+      const { createServer: createViteServer } = await import("vite");
+      const vite = await createViteServer({
+        server: { middlewareMode: true },
+        appType: "spa",
+      });
+      app.use(vite.middlewares);
+      const PORT = 3000;
+      app.listen(PORT, "0.0.0.0", () => {
+        console.log(`[DEV] Server running at http://localhost:${PORT}`);
+      });
+    } catch (e) {
+      console.error("Vite failed to initialize", e);
+    }
   };
   startDev();
+} else {
+  // In Vercel, the static files are served by the platform.
+  // We only need to respond to API routes or return 404 for missing APIs.
+  app.get("/api/*", (req, res) => {
+    res.status(404).json({ error: "API Route Not Found" });
+  });
 }
 
 export default app;

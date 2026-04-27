@@ -94,12 +94,12 @@ const Detections = () => {
                           d.status === 'TAKEDOWN_ISSUED' ? 'text-neon-green border-neon-green/30 bg-neon-green/5' : 
                           'text-text-muted border-tactical-border'
                         }`}>
-                          {d.status.replace('_', ' ')}
+                          {d.status?.replace('_', ' ') || 'UNKNOWN'}
                         </span>
-                        <span className="font-mono text-[9px] text-text-muted">ID_{d.id.substring(0,6)}</span>
+                        <span className="font-mono text-[9px] text-text-muted">ID_{d.id?.substring(0,6) || 'XXXXXX'}</span>
                      </div>
 
-                     <h3 className="font-mono text-xs text-white uppercase font-bold tracking-tight mb-1">{d.platform} NODE_{d.id.substring(6,10)}</h3>
+                     <h3 className="font-mono text-xs text-white uppercase font-bold tracking-tight mb-1">{d.platform} NODE_{d.id?.substring(6,10) || 'XXXX'}</h3>
                      <p className="font-mono text-[9px] text-text-muted truncate uppercase tracking-widest">{d.sourceUrl}</p>
                      
                      <div className="mt-4 flex items-center justify-between border-t border-tactical-border pt-3">

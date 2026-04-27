@@ -22,11 +22,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('sg_user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+    const initAuth = () => {
+      try {
+        const storedUser = localStorage.getItem('sg_user');
+        const token = localStorage.getItem('sg_token');
+        if (storedUser && token) {
+          setUser(JSON.parse(storedUser));
+        }
+      } catch (err) {
+        console.error('AUTH_INIT_ERROR:', err);
+        localStorage.removeItem('sg_user');
+        localStorage.removeItem('sg_token');
+      } finally {
+        setLoading(false);
+      }
+    };
+    initAuth();
   }, []);
 
   const login = (token: string, user: User) => {
