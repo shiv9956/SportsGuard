@@ -11,15 +11,15 @@ const Landing = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-blaze/5 rounded-full blur-[120px] pointer-events-none"></div>
 
       {/* Navigation */}
-      <nav className="absolute top-0 w-full px-12 py-8 flex justify-between items-center z-50">
+      <nav className="absolute top-0 w-full px-6 md:px-12 py-8 flex justify-between items-center z-50">
         <div className="flex items-center gap-3">
           <div className="w-5 h-5 bg-brand-blaze"></div>
-          <span className="text-white font-bold tracking-tighter text-2xl uppercase" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>SportsGuard</span>
+          <span className="text-white font-bold tracking-tighter text-xl md:text-2xl uppercase" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>SportsGuard</span>
         </div>
-        <div className="flex items-center gap-8">
-           <Link to="/login" className="font-mono text-xs uppercase tracking-widest text-text-muted hover:text-white transition-colors">Client Terminal</Link>
+        <div className="flex items-center gap-4 md:gap-8">
+           <Link to="/login" className="hidden sm:block font-mono text-xs uppercase tracking-widest text-text-muted hover:text-white transition-colors">Client Terminal</Link>
            <Link to="/login">
-             <button className="bg-white text-black font-mono text-[11px] px-6 py-2.5 tracking-[0.2em] uppercase hover:bg-brand-blaze hover:text-white transition-all transform active:scale-95">
+             <button className="bg-white text-black font-mono text-[10px] md:text-[11px] px-4 md:px-6 py-2 md:py-2.5 tracking-[0.2em] uppercase hover:bg-brand-blaze hover:text-white transition-all transform active:scale-95">
                Authenticate
              </button>
            </Link>
@@ -27,19 +27,19 @@ const Landing = () => {
       </nav>
 
       {/* Hero Content */}
-      <main className="relative z-10 text-center max-w-4xl px-6 space-y-12">
+      <main className="relative z-10 text-center max-w-4xl px-6 pt-24 md:pt-0 space-y-8 md:space-y-12">
         <motion.div
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}
            className="space-y-4"
         >
-          <div className="font-mono text-[10px] uppercase tracking-[0.5em] text-brand-blaze inline-block border border-brand-blaze/30 px-4 py-1 bg-brand-blaze/5 mb-4">
+          <div className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.5em] text-brand-blaze inline-block border border-brand-blaze/30 px-3 md:px-4 py-1 bg-brand-blaze/5 mb-4 max-w-full truncate">
             Next-Gen Asset Defense // 2026.SG
           </div>
-          <h1 className="text-8xl md:text-[140px] font-bold tracking-tighter leading-none mb-4 uppercase" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
+          <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[140px] font-bold tracking-tighter leading-none mb-4 uppercase break-words" style={{ fontFamily: "'Arial Narrow', sans-serif" }}>
             <span className="text-brand-blaze">Sports</span><span className="text-white">Guard</span>
           </h1>
-          <p className="text-xl md:text-2xl text-text-muted font-medium tracking-tight max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl lg:text-2xl text-text-muted font-medium tracking-tight max-w-2xl mx-auto px-4">
             Digital Asset Protection for Sports Media. Register, Fingerprint, and Neutralize unauthorized usage across the global edge.
           </p>
         </motion.div>
@@ -80,12 +80,12 @@ const Landing = () => {
       </main>
 
       {/* Footer Info */}
-      <footer className="absolute bottom-12 w-full px-12 flex justify-between items-end font-mono text-[9px] uppercase tracking-widest text-[#52525B]">
-        <div className="flex flex-col gap-1 text-text-muted">
+      <footer className="absolute bottom-6 md:bottom-12 w-full px-6 md:px-12 flex flex-col md:flex-row justify-between items-center md:items-end font-mono text-[9px] uppercase tracking-widest text-[#52525B] gap-4">
+        <div className="flex flex-col gap-1 text-text-muted items-center md:items-start text-center md:text-left">
           <div>LATENCY: 14MS // CLOUD_RUN_REGION: US-CENTRAL1</div>
           <div>ENCRYPTION: AES-256-GCM // SECURITY_LEVEL: ALPHA</div>
         </div>
-        <div className="flex gap-8">
+        <div className="flex gap-8 items-center">
           <span className="text-neon-green">STATUS: OPTIMAL</span>
           <span>© 2026 SPORTSGUARD SYSTEM</span>
         </div>

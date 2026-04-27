@@ -11,7 +11,9 @@ import {
   Fingerprint, 
   MapPin,
   Loader2,
-  FileText
+  FileText,
+  ShieldCheck,
+  Radar
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { toast } from 'sonner';
@@ -53,6 +55,9 @@ const Assets = () => {
   const [loading, setLoading] = useState(true);
   const [isRegistering, setIsRegistering] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showCheckModal, setShowCheckModal] = useState(false);
+  const [checkUrl, setCheckUrl] = useState('');
+  const [checking, setChecking] = useState(false);
   const [newAsset, setNewAsset] = useState({ title: '', sport: 'FOOTBALL' });
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -97,6 +102,28 @@ const Assets = () => {
         setIsRegistering(false);
       }
     }, 2000);
+  };
+
+  const handleCheckCopyright = (e: React.FormEvent) => {
+    e.preventDefault();
+    setChecking(true);
+    
+    setTimeout(() => {
+      setChecking(false);
+      setShowCheckModal(false);
+      setCheckUrl('');
+      // Randomly say it's copyrighted or not for demo
+      const isProtected = Math.random() > 0.3;
+      if (isProtected) {
+        toast.success('COPYRIGHT_VERIFIED: Asset fingerprint matches an authorized master in our Vault.', {
+          duration: 5000,
+        });
+      } else {
+        toast.error('NO_SIGNATURE_FOUND: This media is NOT registered in the protection network.', {
+          duration: 5000,
+        });
+      }
+    }, 2500);
   };
 
   const handleDelete = async (id: string) => {
@@ -177,21 +204,93 @@ const Assets = () => {
         </div>
       )}
 
+      {/* Copyright Check Modal */}
+      {showCheckModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 backdrop-blur-md bg-black/60">
+           <motion.div 
+             initial={{ opacity: 0, scale: 0.9 }}
+             animate={{ opacity: 1, scale: 1 }}
+             className="bg-panel-card border border-tactical-border p-10 max-w-md w-full relative overflow-hidden"
+           >
+              <div className="absolute top-0 right-0 bg-neon-green text-black font-mono text-[8px] px-3 py-1 uppercase tracking-widest font-bold">Security_Probe</div>
+              <h3 className="font-bebas text-5xl mb-8 uppercase tracking-tighter">Copyright Verification</h3>
+              
+              <form onSubmit={handleCheckCopyright} className="space-y-8">
+                <div className="space-y-3">
+                  <label className="font-mono text-[10px] text-text-muted uppercase tracking-widest font-bold">Target Resource URL/Hash</label>
+                  <input 
+                    autoFocus
+                    required
+                    type="text" 
+                    value={checkUrl}
+                    onChange={(e) => setCheckUrl(e.target.value)}
+                    placeholder="https://content-node.com/video/stream_01"
+                    className="w-full bg-bg-void border border-tactical-border p-4 font-mono text-xs text-white uppercase focus:border-neon-green outline-none tracking-widest placeholder:opacity-30"
+                  />
+                  <p className="font-mono text-[7px] text-text-muted uppercase tracking-widest">System will verify signature against global vault database</p>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <button 
+                    type="button"
+                    onClick={() => setShowCheckModal(false)}
+                    className="py-4 border border-tactical-border font-mono text-[10px] uppercase tracking-widest text-text-muted hover:text-white transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button 
+                    type="submit"
+                    disabled={checking}
+                    className="py-4 bg-neon-green text-black font-mono text-[10px] font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(50,215,75,0.2)] transition-all active:scale-95 disabled:opacity-50"
+                  >
+                    {checking ? 'Analyzing...' : 'Execute Probe'}
+                  </button>
+                </div>
+              </form>
+           </motion.div>
+        </div>
+      )}
+
+      {/* Verification Loading State */}
+      {checking && (
+        <div className="fixed inset-0 z-[60] flex flex-col items-center justify-center p-6 backdrop-blur-xl bg-black/80 scan-line">
+           <Radar className="w-24 h-24 text-neon-green animate-spin mb-8" />
+           <div className="text-center space-y-4">
+              <h2 className="font-bebas text-6xl text-white uppercase tracking-tighter">Cross-Referencing Vault</h2>
+              <div className="w-96 h-1 bg-tactical-border relative overflow-hidden">
+                 <motion.div 
+                   initial={{ x: "-100%" }}
+                   animate={{ x: "100%" }}
+                   transition={{ duration: 1.0, repeat: Infinity, ease: "linear" }}
+                   className="absolute inset-0 bg-neon-green"
+                 />
+              </div>
+              <p className="font-mono text-[10px] text-neon-green uppercase tracking-[0.4em] animate-pulse">Running pHash_v9 Spatial Match...</p>
+           </div>
+        </div>
+      )}
+
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-tactical-border">
          <div>
-            <h1 className="text-7xl font-bebas uppercase tracking-tight">Asset Vault</h1>
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-text-muted mt-2">
+            <h1 className="text-5xl md:text-7xl font-bebas uppercase tracking-tight">Asset Vault</h1>
+            <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] text-text-muted mt-2">
               SECTOR: MEDIA_REPOSITORY // TOTAL_LOAD: {assets.length} ENTRIES
             </p>
          </div>
-         <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4">
+            <button 
+              onClick={() => setShowCheckModal(true)}
+              className="border border-tactical-border px-4 md:px-6 py-2 md:py-3 font-mono text-[9px] md:text-[10px] uppercase tracking-widest hover:text-brand-blaze transition-colors flex items-center gap-2"
+            >
+               <ShieldCheck className="w-4 h-4 text-neon-green" /> Copyright_Check
+            </button>
             <button 
               onClick={() => setShowModal(true)}
-              className="bg-white text-black font-mono text-[10px] px-8 py-3 tracking-widest uppercase hover:bg-brand-blaze hover:text-white transition-all transform active:scale-95 flex items-center gap-2"
+              className="bg-white text-black font-mono text-[9px] md:text-[10px] px-6 md:px-8 py-2 md:py-3 tracking-widest uppercase hover:bg-brand-blaze hover:text-white transition-all transform active:scale-95 flex items-center gap-2"
             >
                <Plus className="w-4 h-4" /> Register_New_Media
             </button>
-         </div>
+          </div>
       </div>
 
       <div className="grid grid-cols-1 md:flex gap-4">

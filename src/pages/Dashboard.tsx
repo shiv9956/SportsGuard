@@ -62,16 +62,16 @@ const Dashboard = () => {
   return (
     <div className="space-y-12">
       {/* Header Area */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-tactical-border pb-8">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-tactical-border pb-8">
         <div>
-           <h1 className="text-7xl font-bebas">Global Overview</h1>
-           <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-brand-blaze mt-2 flex items-center gap-2">
+           <h1 className="text-5xl md:text-7xl font-bebas">Global Overview</h1>
+           <div className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] text-brand-blaze mt-2 flex items-center gap-2">
              <div className="status-dot bg-brand-blaze status-dot-pulse"></div>
              System_Status: Nominal [Sys_Uptime: 99.98%]
            </div>
         </div>
         <div className="flex gap-2">
-           <div className="px-4 py-1.5 bg-neon-green/5 border border-neon-green text-neon-green font-mono text-[10px] uppercase tracking-widest flex items-center gap-2">
+           <div className="px-4 py-1.5 bg-neon-green/5 border border-neon-green text-neon-green font-mono text-[9px] md:text-[10px] uppercase tracking-widest flex items-center gap-2 whitespace-nowrap">
               <div className="w-2 h-2 bg-neon-green rounded-full shadow-[0_0_8px_#32D74B]"></div>
               Protection_Active
            </div>
